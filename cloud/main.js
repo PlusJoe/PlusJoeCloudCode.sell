@@ -105,3 +105,33 @@ Parse.Cloud.beforeDelete("Posts", function(request, response) {
       });
 });
 
+
+
+
+
+
+
+
+var Stripe = require('stripe');
+Stripe.initialize('');
+
+
+Parse.Cloud.define("purchaseItem", function(request, response) {
+  // The Item and Order tables are completely locked down. We 
+  // ensure only Cloud Code can get access by using the master key.
+
+ Stripe.Charges.create({
+      amount: item.get('price') * 100, // express dollars in cents 
+      currency: 'usd',
+      card: request.params.cardToken
+    }).then(function() {
+    // And we're done!
+    response.success('Success');
+
+  // Any promise that throws an error will propagate to this handler.
+  // We use it to return the error from our Cloud Function using the 
+  // message we individually crafted based on the failure above.
+  }, function(error) {
+    response.error(error);
+  });
+});
