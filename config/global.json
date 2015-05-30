@@ -1,0 +1,14 @@
+{
+  "global": {
+    "parseVersion": "1.4.0"
+  },
+  "applications": {
+    "PlusJoe": {
+      "applicationId": "2VdZroRZXm1voBa03m3F1cgkwgV5AFgJel1dYsVf",
+      "masterKey": "oq9uNNDgn6p9W30CqMyp6FpZRYsbHCxD8pdwz218"
+    },
+    "_default": {
+      "link": "PlusJoe"
+    }
+  }
+}
