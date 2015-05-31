@@ -121,7 +121,7 @@ Parse.Cloud.define("purchaseItem", function(request, response) {
   // ensure only Cloud Code can get access by using the master key.
 
  Stripe.Charges.create({
-      amount: item.get('price') * 100, // express dollars in cents 
+      amount: request.params.price * 100, // express dollars in cents 
       currency: 'usd',
       card: request.params.cardToken
     }).then(function() {
