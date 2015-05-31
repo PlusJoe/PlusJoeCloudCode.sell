@@ -110,18 +110,20 @@ Parse.Cloud.beforeDelete("Posts", function(request, response) {
 
 
 
-
+var stripe = require("stripe");
 
 var Stripe = require('stripe');
-Stripe.initialize('');
+Stripe.initialize('sk_test_EVlB1vn2jqIhaCBM9p7C0v9X');
 
 
 Parse.Cloud.define("purchaseItem", function(request, response) {
+    Parse.Cloud.useMasterKey();
+
   // The Item and Order tables are completely locked down. We 
   // ensure only Cloud Code can get access by using the master key.
 
  Stripe.Charges.create({
-      amount: request.params.price * 100, // express dollars in cents 
+      amount: Math.floor(request.params.price * 100), // express dollars in cents 
       currency: 'usd',
       card: request.params.cardToken
     }).then(function() {
@@ -132,6 +134,6 @@ Parse.Cloud.define("purchaseItem", function(request, response) {
   // We use it to return the error from our Cloud Function using the 
   // message we individually crafted based on the failure above.
   }, function(error) {
-    response.error(error);
+    response.error(error.message);
   });
 });
