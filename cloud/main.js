@@ -2,7 +2,7 @@ var _ = require("underscore");
 var toLowerCase = function(w) { return w.toLowerCase(); };
 var stopWords = ["a", "is", "this", "the", "in", "and", "sex", "body", "love", "fuck", "gun"];
 
-Parse.Cloud.beforeSave("Posts", function(request, response) {
+Parse.Cloud.beforeSave("Post", function(request, response) {
     var post = request.object;
     var body = post.get("body");
     if(body) {
@@ -15,7 +15,7 @@ Parse.Cloud.beforeSave("Posts", function(request, response) {
 });
 
 
-Parse.Cloud.afterSave("Posts", function(request, response) {
+Parse.Cloud.afterSave("Post", function(request, response) {
     var post = request.object;
     var body = post.get("body");
     if(body) {
@@ -38,12 +38,12 @@ Parse.Cloud.afterSave("Posts", function(request, response) {
 
 
 
-    var HashTag = Parse.Object.extend("HashTags");
+    var HashTag = Parse.Object.extend("HashTag");
 
     // Parse.Cloud.useMasterKey();
 
     //first delete all previousy tags associated with this post
-    query = new Parse.Query("HashTags");
+    query = new Parse.Query("HashTag");
       query.equalTo("post", post);
       query.find({
         success: function(myhashtags) {
@@ -78,11 +78,11 @@ Parse.Cloud.afterSave("Posts", function(request, response) {
 };
 });
 
-Parse.Cloud.beforeDelete("Posts", function(request, response) {
+Parse.Cloud.beforeDelete("Post", function(request, response) {
     var post = request.object;
     console.log("post id for deletion: "  + post);
     //first delete all previousy tags associated with this post
-    query = new Parse.Query("HashTags");
+    query = new Parse.Query("HashTag");
       query.equalTo("post", post);
       query.find({
         success: function(myhashtags) {
