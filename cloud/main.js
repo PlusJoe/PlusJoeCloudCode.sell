@@ -2,17 +2,17 @@ var _ = require("underscore");
 var toLowerCase = function(w) { return w.toLowerCase(); };
 var stopWords = ["a", "is", "this", "the", "in", "and", "sex", "body", "love", "fuck", "gun"];
 
-Parse.Cloud.beforeSave("Post", function(request, response) {
-    var post = request.object;
-    var body = post.get("body");
-    if(body) {
-      if(post.get("active") == false) {//set the price only if it's not initialized yet
-        var pricetag = body.match(/\$\d+/gmi);
-        post.set("price", parseInt(pricetag[0].substring(1)));
-      };
-    };
-    response.success();
-});
+// Parse.Cloud.beforeSave("Post", function(request, response) {
+//     var post = request.object;
+//     var body = post.get("body");
+//     // if(body) {
+//     //   if(post.get("active") == false) {//set the price only if it's not initialized yet
+//     //     var pricetag = body.match(/\$\d+/gmi);
+//     //     post.set("price", parseInt(pricetag[0].substring(1)));
+//     //   };
+//     // };
+//     response.success();
+// });
 
 
 Parse.Cloud.afterSave("Post", function(request, response) {
