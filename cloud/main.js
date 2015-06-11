@@ -30,11 +30,15 @@ Parse.Cloud.afterSave("Post", function(request, response) {
             .map(function(x){return x.replace(/\s/g, '');})
             .filter(function(w) { return stopWords.indexOf(w) <0;});
 
+          console.log("hashTags1: " + hashtags);
+
         // remove duplicate tags
         uniqueArray = hashtags.filter(function(item, pos) {
             return hashtags.indexOf(item) == pos;
         })
         hashtags = uniqueArray
+        
+        console.log("hashTags2: " + hashtags);
 
 
 
