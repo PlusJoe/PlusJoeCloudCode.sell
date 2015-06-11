@@ -24,10 +24,10 @@ Parse.Cloud.afterSave("Post", function(request, response) {
 
     words = _.filter(words, function(w) { return w.match(/^\w+$/) && ! _.contains(stopWords, w); });
  
-    var hashtags = body.match(/#.+?\s/g);
+    var hashtags = body.match(/#.+?\b/g);
     hashtags = _.map(hashtags, toLowerCase)
         .map(function(x){return x.replace(/#/g, '');})
-            .map(function(x){return x.replace(/\s/g, '');})
+            // .map(function(x){return x.replace(/\s/g, '');})
             .filter(function(w) { return stopWords.indexOf(w) <0;});
 
           console.log("hashTags1: " + hashtags);
