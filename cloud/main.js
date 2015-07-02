@@ -1,3 +1,7 @@
+require('cloud/app.js');
+
+
+
 var _ = require("underscore");
 var toLowerCase = function(w) { return w.toLowerCase(); };
 var stopWords = ["a", "is", "this", "the", "in", "and", "sex", "body", "love", "fuck", "gun"];
@@ -143,3 +147,5 @@ Parse.Cloud.define("purchaseItem", function(request, response) {
     response.error(error.message);
   });
 });
+
+
