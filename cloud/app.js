@@ -32,8 +32,8 @@ app.get('/hello', function(req, res) {
   res.render('hello', { message: 'Congrats, you just set up your app!' });
 });
 
-app.get('/purchase', function(req, res) {
-  res.render('purchase');
+app.get('/stripe', function(req, res) {
+  res.render('stripe');
 });
 
 
