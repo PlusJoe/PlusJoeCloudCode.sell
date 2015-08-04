@@ -1,19 +1,113 @@
-
 <html>
-  <head>
-    <title>My ParseApp site</title>
-    <style>
-    body { font-family: Helvetica, Arial, sans-serif; }
-    div { width: 800px; height: 400px; margin: 40px auto; padding: 20px; border: 2px solid #5298fc; }
-    h1 { font-size: 30px; margin: 0; }
-    p { margin: 40px 0; }
-    em { font-family: monospace; }
-    a { color: #5298fc; text-decoration: none; }
-    </style>
-  </head>
-  <body>
-    <div>
+<head>
+  <title>My ParseApp site</title>
+  <style>
+  body { font-family: Helvetica, Arial, sans-serif; }
+  div { width: 800px; height: 400px; margin: 40px auto; padding: 20px; border: 2px solid #5298fc; }
+  h1 { font-size: 30px; margin: 0; }
+  p { margin: 40px 0; }
+  em { font-family: monospace; }
+  a { color: #5298fc; text-decoration: none; }
+  </style>
+
+  <script type="text/javascript">
+  var deviceDetection = function () { 
+    var osVersion, 
+    device, 
+    deviceType, 
+    userAgent, 
+    isSmartphoneOrTablet; 
+
+    device = (navigator.userAgent).match(/Android|iPhone|iPad|iPod/i); 
+
+    if ( /Android/i.test(device) ) { 
+      if ( !/mobile/i.test(navigator.userAgent) ) { 
+        deviceType = 'tablet'; 
+      } else { 
+        deviceType = 'phone'; 
+      } 
+
+      osVersion = (navigator.userAgent).match(/Android\s+([\d\.]+)/i); 
+      osVersion = osVersion[0]; 
+      osVersion = osVersion.replace('Android ', ''); 
+
+    } else if ( /iPhone/i.test(device) ) { 
+      deviceType = 'phone'; 
+      osVersion = (navigator.userAgent).match(/OS\s+([\d\_]+)/i); 
+      osVersion = osVersion[0]; 
+      osVersion = osVersion.replace(/_/g, '.'); 
+      osVersion = osVersion.replace('OS ', ''); 
+
+    } else if ( /iPad/i.test(device) ) { 
+      deviceType = 'tablet'; 
+      osVersion = (navigator.userAgent).match(/OS\s+([\d\_]+)/i); 
+      osVersion = osVersion[0]; 
+      osVersion = osVersion.replace(/_/g, '.'); 
+      osVersion = osVersion.replace('OS ', ''); 
+    } 
+    isSmartphoneOrTablet = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent); 
+    userAgent = navigator.userAgent; 
+
+    return { 'isSmartphoneOrTablet': isSmartphoneOrTablet, 
+    'device': device, 
+    'osVersion': osVersion, 
+    'userAgent': userAgent, 
+    'deviceType': deviceType 
+  }; 
+}();
+
+
+function getQueryVariable(variable) {
+  var query = window.location.search.substring(1);
+  var vars = query.split('&');
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split('=');
+    if (decodeURIComponent(pair[0]) == variable) {
+      return decodeURIComponent(pair[1]);
+    }
+  }
+  console.log('Query variable %s not found', variable);
+}
+
+
+window.onload = function(){
+  var response;
+  var clickedAt = +new Date;
+
+  if(deviceDetection.device == 'Android') {
+
+    response = "You are waving on Android.";
+
+    window.location = "http://plusjoe.com/android_is_not_installed.html?token=" + getQueryVariable('token');
+
+  } else if (deviceDetection.device == 'iPhone' || deviceDetection.device == 'iPad' || deviceDetection.device == 'Android') {
+
+    response = "You are waving on iPhone or iPad.";
+
+    setTimeout(function() {
+      if (+new Date - clickedAt < 2000) {                        
+        window.location = "itms-apps://itunes.apple.com/us/app/plusjoe/id782010386?token=" + getQueryVariable('token');
+      }
+    }, 500);
+    window.location = "plusjoe://share?token=" + getQueryVariable('token');
+
+
+  } else {
+    response = "Oops, your mobile phone is not supported, or you are not waving on mobile. plusjoe can only wave on Android or IOS at this time";
+  }
+  //alert(getQueryVariable('token'));
+  $('#content').html(response);
+}
+
+</script>
+
+</head>
+<body>
+  <div id="contentwrap">
+    <div id="content">
+
       redirecting 
     </div>
-  </body>
+  </div>
+</body>
 </html>

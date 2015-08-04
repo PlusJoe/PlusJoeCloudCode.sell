@@ -4,6 +4,23 @@ Express = require('express');
 var AppLinks = require('applinks-metatag');
 app = Express();
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                           app links                                                           //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+  app.use(AppLinks([{
+      platform: "ios",
+      url: "plusjoe://",
+      app_name: "PlusJoe"
+  }, {
+      platform: "android",
+      url: "plusjoe://",
+      package: "com.plusjoe"
+  }]));
+// Attach the Express app to Cloud Code.
+app.listen();
+
+
 // Global app configuration section
 app.set('views', 'cloud/views');  // Specify the folder to find templates
 app.set('view engine', 'ejs');    // Set the template engine
@@ -18,6 +35,9 @@ app.get('/hello', function(req, res) {
 app.get('/purchase', function(req, res) {
   res.render('purchase');
 });
+
+
+
 // // Example reading from the request query string of an HTTP get request.
 // app.get('/test', function(req, res) {
 //   // GET http://example.parseapp.com/test?message=hello
@@ -33,19 +53,3 @@ app.get('/purchase', function(req, res) {
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//                           app links                                                           //
-///////////////////////////////////////////////////////////////////////////////////////////////////
-  app.use(AppLinks([{
-      platform: "ios",
-      url: "plusjoe://",
-      app_name: "PlusJoe"
-  }, {
-      platform: "android",
-      url: "plusjoe://",
-      package: "com.plusjoe"
-  }]));
-
-
-// Attach the Express app to Cloud Code.
-app.listen();
